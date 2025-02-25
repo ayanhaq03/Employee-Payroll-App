@@ -11,6 +11,8 @@ import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 @Service
 public class EmployeeService {
 
+
+     //used autowired annotation here
     @Autowired
     private EmployeeRepository repository;
 
