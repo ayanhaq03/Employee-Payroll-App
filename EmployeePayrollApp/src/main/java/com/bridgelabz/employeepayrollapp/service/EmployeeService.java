@@ -1,40 +1,42 @@
 package com.bridgelabz.employeepayrollapp.service;
 
-import com.bridgelabz.employeepayrollapp.model.Employee;
-import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.bridgelabz.employeepayrollapp.model.Employee;
+import com.bridgelabz.employeepayrollapp.repository.EmployeeRepository;
 
 @Service
 public class EmployeeService {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepository repository;
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        return repository.findAll();
     }
 
-    public Optional<Employee> getEmployeeById(Long id) {
-        return employeeRepository.findById(id);
+    public Employee getEmployeeById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     public Employee addEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+        return repository.save(employee);
     }
 
-    public Employee updateEmployee(Long id, Employee employeeDetails) {
-        return employeeRepository.findById(id).map(employee -> {
-            employee.setName(employeeDetails.getName());
-            employee.setSalary(employeeDetails.getSalary());
-            return employeeRepository.save(employee);
-        }).orElse(null);
+    public Employee updateEmployee(Long id, Employee updatedEmployee) {
+        Employee existingEmployee = repository.findById(id).orElse(null);
+        if (existingEmployee != null) {
+            existingEmployee.setName(updatedEmployee.getName());
+            existingEmployee.setSalary(updatedEmployee.getSalary());
+            return repository.save(existingEmployee);
+        }
+        return null;
     }
 
     public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

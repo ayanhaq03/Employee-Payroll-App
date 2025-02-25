@@ -25,7 +25,7 @@ public class EmployeeController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-        Optional<Employee> employee = employeeService.getEmployeeById(id);
+        Optional<Employee> employee = Optional.ofNullable(employeeService.getEmployeeById(id));
         return employee.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
