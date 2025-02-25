@@ -16,6 +16,9 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository repository;
 
+
+    //storing data here in the list
+
     public List<Employee> getAllEmployees() {
         return repository.findAll();
     }
@@ -28,6 +31,7 @@ public class EmployeeService {
         return repository.save(employee);
     }
 
+    //updating data
     public Employee updateEmployee(Long id, Employee updatedEmployee) {
         Employee existingEmployee = repository.findById(id).orElse(null);
         if (existingEmployee != null) {
@@ -38,6 +42,8 @@ public class EmployeeService {
         return null;
     }
 
+
+    //deleting data
     public void deleteEmployee(Long id) {
         repository.deleteById(id);
     }
